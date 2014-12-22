@@ -6,13 +6,10 @@ import (
   "bufio"
   "log"
   "os"
-  "io"
 )
 
 func main() {
-  conn, err := UDPConnect(":5050", ":4040")
-  if err != nil { log.Fatal(err) }
-  Communicate(conn)
+  PrintCName("google.com")
 }
 
 func Listen(conn net.Conn) {
@@ -86,9 +83,14 @@ func TCPListener(laddr string) {
 
     // Handle connections in a new goroutine
     go func(c net.Conn) {
-      // Echo incoming data
-      io.Copy(c, c)
-      // Close the connection
+      for {
+        reader := bufio.NewReader(c)
+
+        s, err := reader.ReadBytes('\n')
+        if err != nil { fmt.Println(err) }
+        c.Write(s)
+      }
+
       c.Close()
     }(conn)
   }
