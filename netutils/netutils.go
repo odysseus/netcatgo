@@ -1,16 +1,11 @@
 /// Short examples of useful methods
 
-package main
+package netutils
 
 import (
   "fmt"
   "net"
 )
-
-func main() {
-  s, _ := GetHTTPHead("google.com:80")
-  fmt.Println(s)
-}
 
 // Prints the host IP address for a given URI
 func PrintHost(name string) {
