@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
-  PrintCName("google.com")
 }
 
 func Listen(conn net.Conn) {

@@ -1,11 +1,15 @@
 /// Short examples of useful methods
 
-package netutils
+package main
 
 import (
   "fmt"
   "net"
+  "os"
 )
+
+func main() {
+}
 
 // Prints the host IP address for a given URI
 func PrintHost(name string) {
@@ -14,6 +18,13 @@ func PrintHost(name string) {
 
   for _, s := range addrs {
     fmt.Println(s)
+  }
+}
+
+func errChk(err error) {
+  if err != nil {
+    fmt.Fprint(os.Stderr, err)
+    os.Exit(1)
   }
 }
 
@@ -38,4 +49,14 @@ func GetHTTPHead(addr string) (string, error){
   rlen, _ := conn.Read(buffer[:])
 
   return string(buffer[:rlen]), nil
+}
+
+func UDPEcho(conn net.Conn) {
+  var buf [1024]byte
+  for {
+    rlen, err := conn.Read(buf[:])
+    errChk(err)
+
+    fmt.Println(string(buf[:rlen]))
+  }
 }
